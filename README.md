@@ -7,7 +7,7 @@ This is a **Flask-based deep learning web application** that detects breast canc
 ### 👥 Made by - Group: SI-24556-1744082820
 
 **Group Members:**
-- Sohil S Philip (22BCE10358) — 📧 sohilphilip2022@vitbhopal.ac.in
+- Sohil S Philip (22BCE10358) [Group Leader] — 📧 sohilphilip2022@vitbhopal.ac.in
 - Nimish Rao (22BAI10054) — 📧 nimishrao2022@vitbhopal.ac.in
 - Priyansh Rathore (22BCY10248) — 📧 priyanshrathore2022@vitbhopal.ac.in
 - Rekhansh Raje Deshmukh (22BCY10085) — 📧 rekhanshrajedeshmukh2022@vitbhopal.ac.in
