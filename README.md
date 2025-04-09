@@ -1,4 +1,4 @@
-# 🧠 Breast Cancer Detection Web App
+# 🧠 Breast Cancer Detection Using Deep Learning
 
 This is a **Flask-based deep learning web application** that detects breast cancer from histopathological images using a trained Convolutional Neural Network (CNN) model.
 
