@@ -1,0 +1,18 @@
+# Ignore dataset
+breastcancerdataset/
+
+# Ignore uploaded images
+Flask/uploads/
+
+# Ignore model checkpoints or temporary files if any
+*.checkpoint
+*.tmp
+__pycache__/
+*.pyc
+
+# Ignore virtual environment (if any)
+venv/
+.env/
+breastcancerdataset/
+Flask/uploads/
+__pycache__/

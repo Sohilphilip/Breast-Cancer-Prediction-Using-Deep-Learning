@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Breast Cancer Detection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 25px;
+            margin: auto;
+            width: 50%;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 1.8em;
+        }
+
+        .upload-form {
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fafafa;
+            cursor: pointer;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 22px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .benign {
+            color: #28a745;
+        }
+
+        .malignant {
+            color: #dc3545;
+        }
+
+        .preview-img {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #preview-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #preview {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧠 Breast Cancer Detection</h1>
+        <form class="upload-form" action="/" method="POST" enctype="multipart/form-data"
+            onsubmit="return showResult();">
+            <input type="file" name="image" id="imageInput" accept="image/*" required
+                onchange="previewImage(event)"><br><br>
+            <button type="submit">Predict</button>
+            <button type="button" onclick="clearImage()">Clear</button>
+        </form>
+
+        <!-- Preview uploaded image before prediction -->
+        <div id="preview-container" style="display:none;">
+            <img id="preview" src="#" alt="Preview Image" width="300">
+        </div>
+
+        <!-- Show error if any -->
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <!-- Show result only after prediction -->
+        {% if label %}
+        <div class="result {{ label|lower }}">
+            Result: {{ label }} ({{ confidence }}% confidence)
+        </div>
+        <img src="{{ url_for('uploaded_file', filename=image_file) }}" width="300">
+        {% endif %}
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const preview = document.getElementById('preview');
+                const container = document.getElementById('preview-container');
+                preview.src = reader.result;
+                container.style.display = 'flex';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function clearImage() {
+            document.querySelector('input[type="file"]').value = '';
+            document.getElementById('preview').src = '#';
+            document.getElementById('preview-container').style.display = 'none';
+
+            // Optional: remove result after Clear
+            const resultDiv = document.querySelector('.result');
+            if (resultDiv) resultDiv.remove();
+
+            const predictionImg = document.querySelector('img[src*="/uploads/"]');
+            if (predictionImg) predictionImg.remove();
+        }
+
+
+        function showResult() {
+            // Could add loading effect here if needed
+            return true; // continue with form submission
+        }
+    </script>
+</body>/*
+</html>
