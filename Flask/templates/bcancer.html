@@ -76,15 +76,11 @@
             color: #dc3545;
         }
 
-        .preview-img {
-            margin-top: 20px;
-            display: none;
-        }
-
         #preview-container {
             margin-top: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
 
         #preview {
@@ -110,6 +106,7 @@
         <!-- Preview uploaded image before prediction -->
         <div id="preview-container" style="display:none;">
             <img id="preview" src="#" alt="Preview Image" width="300">
+            <p id="preview-filename" style="margin-top: 10px; font-weight: bold;"></p>
         </div>
 
         <!-- Show error if any -->
@@ -122,40 +119,75 @@
         <div class="result {{ label|lower }}">
             Result: {{ label }} ({{ confidence }}% confidence)
         </div>
-        <img src="{{ url_for('uploaded_file', filename=image_file) }}" width="300">
+        <div style="margin-top: 20px;">
+            <img src="{{ url_for('uploaded_file', filename=image_file) }}" width="300">
+            <p id="predicted-filename" style="margin-top: 10px; font-weight: bold;">File: {{ image_file }}</p>
+        </div>
         {% endif %}
     </div>
 
     <script>
+
         function previewImage(event) {
             const reader = new FileReader();
+            const file = event.target.files[0];
+
             reader.onload = function () {
                 const preview = document.getElementById('preview');
                 const container = document.getElementById('preview-container');
+                const filenameTag = document.getElementById('preview-filename');
+
                 preview.src = reader.result;
                 container.style.display = 'flex';
+                filenameTag.textContent = "File: " + file.name;
+
+                // 🧽 Remove previous prediction results
+                const resultDiv = document.querySelector('.result');
+                if (resultDiv) resultDiv.remove();
+
+                const predictionImg = document.querySelector('img[src*="/uploads/"]');
+                if (predictionImg) predictionImg.remove();
+
+                const predictedFilename = document.getElementById('predicted-filename');
+                if (predictedFilename) predictedFilename.remove();  // ✅ this line removes extra filename
             };
-            reader.readAsDataURL(event.target.files[0]);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
         }
 
         function clearImage() {
-            document.querySelector('input[type="file"]').value = '';
-            document.getElementById('preview').src = '#';
-            document.getElementById('preview-container').style.display = 'none';
+            // Clear file input
+            document.getElementById('imageInput').value = '';
 
-            // Optional: remove result after Clear
+            // Hide preview and filename
+            const previewContainer = document.getElementById('preview-container');
+            const previewImage = document.getElementById('preview');
+            const previewFilename = document.getElementById('preview-filename');
+
+            previewImage.src = '#';
+            previewContainer.style.display = 'none';
+            previewFilename.textContent = '';
+
+            // Remove result text
             const resultDiv = document.querySelector('.result');
             if (resultDiv) resultDiv.remove();
 
+            // Remove prediction image
             const predictionImg = document.querySelector('img[src*="/uploads/"]');
             if (predictionImg) predictionImg.remove();
+
+            // ✅ Remove prediction image name below the image
+            const predictedFilename = document.getElementById('predicted-filename');
+            if (predictedFilename) predictedFilename.remove();
         }
-
-
+        
         function showResult() {
             // Could add loading effect here if needed
             return true; // continue with form submission
         }
     </script>
-</body>/*
+</body>
+
 </html>
