@@ -111,3 +111,11 @@ The dataset is **not included** in this repo due to its large size.
 5. Run all cells in `prepare-dataset.ipynb` to split and organize the dataset into `train/` and `test/` folders.
 
 ✅ Your dataset is now ready for training and testing!
+
+## 📑 Project Report & Video
+
+**Project Report:**  
+[📄 Breast Cancer Detection Report](https://drive.google.com/file/d/1UIu43I1wnW8pGi4arWPCmE5Ysm7ssefV/view?usp=sharing)
+
+**Demo Video:**  
+[🎬 Project Walkthrough Video](https://drive.google.com/file/d/16E9uSiJZv_vKJjofBAN4JY9aTvj_zFv2/view?usp=sharing)
